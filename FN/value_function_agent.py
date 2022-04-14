@@ -24,6 +24,7 @@ class ValueFunctionAgent(FNAgent):
 
     def initialize(self, experiences):
         scaler = StandardScaler()
+        # 価値関数 (ノードの数が10である隠れ層を二つ重ねたNN)
         estimator = MLPRegressor(hidden_layer_sizes=(10, 10), max_iter=1)
         self.model = Pipeline([("scaler", scaler), ("estimator", estimator)])
 
@@ -31,6 +32,7 @@ class ValueFunctionAgent(FNAgent):
         self.model.named_steps["scaler"].fit(states)
 
         # Avoid the predict before fit.
+        # エラーを回避するためにまず一件の経験のみで学習させておく
         self.update([experiences[0]], gamma=0)
         self.initialized = True
         print("Done initialization. From now, begin training!")

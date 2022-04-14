@@ -80,12 +80,14 @@ class Environment():
             return transition_probs
 
         opposite_direction = Action(action.value * -1)
-
+        # action は[up,boyyom,rigit,left]
         for a in self.actions:
             prob = 0
             if a == action:
+                # default は0.8
                 prob = self.move_prob
             elif a != opposite_direction:
+                # 反対方向以外、0.1,0.1
                 prob = (1 - self.move_prob) / 2
 
             next_state = self._move(state, a)
@@ -93,7 +95,7 @@ class Environment():
                 transition_probs[next_state] = prob
             else:
                 transition_probs[next_state] += prob
-
+        # transition_probs = {state:prob, state:prob,,,,}
         return transition_probs
 
     def can_action_at(self, state):

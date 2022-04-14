@@ -60,7 +60,8 @@ class EpsilonGreedyAgent():
             selected_coin = self.policy()
             reward, done = env.step(selected_coin)
             rewards.append(reward)
-
+            
+            # 報酬を選択したコインごとに更新　＝＞policyでgreedyの場合一番確率の高いものを選ぶ。epsilonの場合ランダムに選ぶ(調査)
             n = N[selected_coin]
             coin_average = self.V[selected_coin]
             new_average = (coin_average * n + reward) / (n + 1)

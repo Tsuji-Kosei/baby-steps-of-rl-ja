@@ -44,8 +44,10 @@ class FNAgent():
         raise NotImplementedError("You have to implement update method.")
 
     def policy(self, s):
+        # 探索
         if np.random.random() < self.epsilon or not self.initialized:
             return np.random.randint(len(self.actions))
+        # 活用
         else:
             estimates = self.estimate(s)
             if self.estimate_probs:
